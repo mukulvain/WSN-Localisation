@@ -17,7 +17,7 @@ index = 0
 def collect_data():
     global index, data
     if request.method == "GET":
-        return json.dumps({"STATUS": "UP AND RUNNING"})
+        return json.dumps({"STATUS": "UP AND RUNNING", "VERSION": "1.0.0"})
     try:
         json_data = request.get_json()
         data[index] = json_data["wifi_networks"]
@@ -40,8 +40,6 @@ def save_data():
 def clear_data():
     global data
     password = request.form["password"]
-    print(password)
-    print(os.getenv("CLEAR_DATA"))
     if password == os.getenv("CLEAR_DATA"):
         data.clear()
         return json.dumps({"status": "Accepted"})
@@ -55,7 +53,6 @@ def reset_database():
     if password == os.getenv("RESET_DATABASE"):
         current_dir = os.path.join(os.getcwd(), "database")
         files = os.listdir(current_dir)
-        print(files)
         for file in files:
             os.remove(os.path.join(current_dir, file))
         return json.dumps({"status": "Accepted"})
