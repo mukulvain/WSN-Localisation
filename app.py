@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, send_from_directory
 import json
 import datetime
 import os
@@ -25,6 +25,11 @@ def collect_data():
         return json.dumps({"status": "Accepted", "message": "Data Received"})
     except:
         return json.dumps({"status": "Failed"})
+
+
+@app.route("/see_data", methods=["GET"])
+def see_data():
+    return json.dumps(data)
 
 
 @app.route("/download_data", methods=["GET"])
